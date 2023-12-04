@@ -33,7 +33,7 @@ import java.util.stream.Stream;
 @Service
 public class CryptoRecommendationService {
 
-    private CryptoRecordDao cryptoRepository;
+    private final CryptoRecordDao cryptoRepository;
 
     @Value("classpath:prices")
     private Resource resourcesDir;
@@ -96,9 +96,6 @@ public class CryptoRecommendationService {
 
 
     public List<CryptoSymbol> getCryptoSortedByNormalizedRange() {
-        List<CryptoDetails> sortedList = cryptoDetailsPerMonthCache.values().stream().sorted(cryptoDetailsComparator).toList();
-//        System.out.println("Sorted Normalized Values:");
-//        sortedList.forEach(crypto -> System.out.println(crypto.getCryptoSymbol() + " - " + crypto.getNormalizedRange()));
         return cryptoDetailsPerMonthCache.values().stream()
                 .sorted(cryptoDetailsComparator)
                 .map(CryptoDetails::getCryptoSymbol)
@@ -117,7 +114,6 @@ public class CryptoRecommendationService {
             if (minMaxValues != null) {
                 double normalizedRange = minMaxValues.get(1) != Double.MIN_VALUE ?
                         (minMaxValues.get(1) - minMaxValues.get(0)) / minMaxValues.get(0) : 0;
-//                System.out.println("Crypto:" + entry.getKey().toString() + " - normalizedRange: " + normalizedRange);
 
                 if (normalizedRange > highestRange) {
                     highestRange = normalizedRange;

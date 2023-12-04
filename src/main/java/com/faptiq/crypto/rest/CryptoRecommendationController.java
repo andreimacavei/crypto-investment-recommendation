@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class CryptoRecommendationController {
 
-    private CryptoRecommendationService cryptoService;
+    private final CryptoRecommendationService cryptoService;
 
     @Autowired
     public CryptoRecommendationController(CryptoRecommendationService cryptoRecommendationService) {
